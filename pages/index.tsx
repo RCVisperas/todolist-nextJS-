@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 interface Task {
   id: string;
   todo: string;
-  completed: boolean;
+  completed: string;
 }
 const myStyleGlobal = {
   padding: "10px",
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
     const newTodo = {
       id: new Date().getTime().toString(),
       todo: todo,
-      completed: false,
+      completed: "Unfinished",
     };
     setTodoValue([...todoValue, newTodo]);
 
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
   function toogleItemCompleted(id: string) {
     const updatedTodos = [...todoValue].map((todo) => {
       if (todo.id === id) {
-        todo.completed = !todo.completed;
+        todo.completed = "Finished";
       }
       return todo;
     });
@@ -87,12 +87,11 @@ const Home: NextPage = () => {
       <div>
         {todoValue.map(
           (todo) =>
-            todo.completed === false && (
+            todo.completed === "Unfinished" && (
               <div style={myStyleTextPending} key={todo.id}>
                 <input
                   type="checkbox"
                   onChange={() => toogleItemCompleted(todo.id)}
-                  checked={todo.completed}
                 />
                 <button
                   style={myStyleButton}
@@ -109,7 +108,7 @@ const Home: NextPage = () => {
           {todoValue.map((todo, index) => {
             return (
               <div key={index}>
-                {todo.completed && (
+                {todo.completed === "Finished" && (
                   <ul>
                     <li>{todo.todo}</li>
                   </ul>
